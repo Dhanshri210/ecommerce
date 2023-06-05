@@ -2,6 +2,7 @@ package com.bikkadit.serviceimpl;
 
 import com.bikkadit.constant.AppConstant;
 import com.bikkadit.entity.User;
+import com.bikkadit.exception.ResourceNotFoundException;
 import com.bikkadit.payload.UserDto;
 import com.bikkadit.repository.UserRepository;
 import com.bikkadit.service.UserService;
@@ -10,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -77,8 +77,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAllUser() {
         logger.info("Request Created For Fetch All User");
-        List<User> findAll = userRepository.findAll();
-        List<UserDto> collect = findAll.stream().map(user
+        List<User> users = userRepository.findAll();
+        List<UserDto> collect = users.stream().map(user
                 -> UsertoDto(user)).collect(Collectors.toList());
         logger.info("Request Completed For Fetch All User");
         return collect;
@@ -90,31 +90,34 @@ public class UserServiceImpl implements UserService {
     public UserDto getUser(String userId) {
         logger.info("Request Created For Fetch Single User");
         User user = this.userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException(AppConstant.USER_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException("User","id",userId));
         logger.info("Request Completed For Fetch Single User");
         return this.UsertoDto(user);
     }
 
-    // GET USER BY EMAIL ID
-
     @Override
     public UserDto getUserByEmail(String userEmail) {
         logger.info("Request Created For Fetch User By Email Id");
-        User user = this.userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException(AppConstant.EMAIL_ERROR));
+      User user = this.userRepository.findByUserEmail(userEmail)
+                .orElseThrow(()-> new ResourceNotFoundException("User","id",userEmail));
         logger.info("Request Completed For Fetch User By Email Id");
         return this.UsertoDto(user);
     }
 
+
+    // GET USER BY EMAIL ID
+
+
+
     // SEARCH USERS
 
     @Override
-    public List<UserDto> searchUser(String keyword) {
+    public Stream<UserDto> searchUser(String keyword) {
         logger.info("Request Created For Searching User");
-        List<User> list = userRepository.findByNameContaining(keyword);
+        List<User> list = userRepository.findByUserNameContaining(keyword);
         Stream<UserDto> users = list.stream().map(user -> UsertoDto(user));
         logger.info("Request Completed For Searching User");
-        return (List<UserDto>) users;
+        return  users;
     }
 
     private UserDto UsertoDto(User user) {

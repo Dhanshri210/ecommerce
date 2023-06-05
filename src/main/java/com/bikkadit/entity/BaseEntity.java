@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @MappedSuperclass
 @Embeddable
-public class CustomeFields {
+public class BaseEntity {
 
     @Column(name="IS_ACTIVE")
     private String isActive;

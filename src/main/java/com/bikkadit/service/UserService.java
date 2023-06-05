@@ -3,6 +3,7 @@ package com.bikkadit.service;
 import com.bikkadit.payload.UserDto;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public interface UserService {
 
@@ -18,7 +19,7 @@ public interface UserService {
 
     UserDto getUserByEmail(String userEmail);
 
-    List<UserDto> searchUser(String keyword);
+    Stream<UserDto> searchUser(String keyword);
 
 }
 

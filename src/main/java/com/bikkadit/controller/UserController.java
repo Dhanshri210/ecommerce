@@ -1,5 +1,4 @@
 package com.bikkadit.controller;
-
 import com.bikkadit.constant.AppConstant;
 import com.bikkadit.helper.ApiResponse;
 import com.bikkadit.payload.UserDto;
@@ -11,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.stream.Stream;
 
+@RestController
+@RequestMapping("/api")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -32,9 +33,9 @@ public class UserController {
 
     @PostMapping("/Create")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-        logger.info("Request Created For Create User");
+        logger.info("Request Created For Create User"   +userDto);
         UserDto userDto1 = userService.createUser(userDto);
-        logger.info("Request Completed For Create User");
+        logger.info("Request Completed For Create User"    +userDto);
         return new ResponseEntity<>(userDto1, HttpStatus.CREATED);
     }
 
@@ -48,12 +49,12 @@ public class UserController {
      * @return
      */
 
-    @PutMapping("/update")
+    @PutMapping("/update/{userId}")
     public ResponseEntity<UserDto> updateUser(@Valid @PathVariable("userId")
                                               String userId,@RequestBody UserDto userDto) {
-        logger.info("Request Created For Update User");
+        logger.info("Request Created For Update User"    +userId);
         UserDto updateUser = userService.updateUser(userDto, userId);
-        logger.info("Request Completed For Update User");
+        logger.info("Request Completed For Update User"     +userId);
         return new ResponseEntity<>(updateUser, HttpStatus.OK);
     }
 
@@ -67,17 +68,17 @@ public class UserController {
      * @return
      */
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{userId}")
     public ResponseEntity<ApiResponse> deleteUser
             (@PathVariable String userId) {
-        logger.warn("Request Created For Delete User");
+        logger.warn("Request Created For Delete User"        +userId);
         userService.deleteUser(userId);
         ApiResponse message = ApiResponse
                 .builder()
                 .message(AppConstant.USER_DELETE)
                 .success(true)
                 .status(HttpStatus.OK).build();
-        logger.warn("Request Completed For Update User");
+        logger.warn("Request Completed For Update User"      +userId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
@@ -111,8 +112,8 @@ public class UserController {
 
     @GetMapping("/getSingle/{userId}")
     public ResponseEntity<UserDto> getUser(@PathVariable String userId) {
-        logger.info("Single Users Fetch Successfully");
-        return new ResponseEntity<>(userService.getUserByEmail(userId)
+        logger.info("Single Users Fetch Successfully"    +userId);
+        return new ResponseEntity<>(userService.getUser(userId)
                 , HttpStatus.OK);
     }
 
@@ -126,11 +127,11 @@ public class UserController {
      * @return
      */
 
-    @GetMapping("/email/{emailId}")
+    @GetMapping("/email/{userEmail}")
     public ResponseEntity<UserDto> getUserByEmail
             (@PathVariable String userEmail) {
-        logger.info("User Fetch By Email Id");
-        return new ResponseEntity<UserDto>(userService
+        logger.info("User Fetch By Email Id"    +userEmail);
+        return new ResponseEntity<>(userService
                 .getUserByEmail(userEmail), HttpStatus.OK);
     }
 
@@ -144,12 +145,10 @@ public class UserController {
      * @return
      */
 
-    @GetMapping("/search/{keywords}")
-    public ResponseEntity<List<UserDto>> searchUser(@PathVariable String keyword) {
-        logger.info("Search User By Using Keywords");
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<Stream<UserDto>> searchUser(@PathVariable String keyword) {
+        logger.info("Search User By Using Keywords"    +keyword);
         return new ResponseEntity<>(userService.searchUser(keyword), HttpStatus.OK);
     }
 
 }
-
-

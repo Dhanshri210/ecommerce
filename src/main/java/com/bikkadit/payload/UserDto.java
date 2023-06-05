@@ -1,45 +1,40 @@
 package com.bikkadit.payload;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
+@Setter
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class UserDto {
 
+    private String userId;
 
+    @Size(min = 5, max = 20, message = "First letter should be capital")
+    @NotBlank
+    private String userName;
 
-    @Setter
-    @Getter
-    @ToString
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public class UserDto {
+    @Size(min = 5, max = 30, message = "Fill Proper Address")
+    private String userAdd;
 
-        @NotEmpty
-        private String userId;
+    @Email(message = "Invalid Email Id")
+    private String userEmail;
 
-        @Size(min = 5, max = 20, message = "First letter should be capital")
-        private String userName;
+    @NotEmpty(message = "First letter Should Be Capital")
+   // @Pattern(regexp = "^[a-zA-z5-9]{8}")
+    private String userPassword;
 
-        @Size(min = 15, max = 30, message = "Fill Proper Address")
-        private String userAdd;
+    @NotBlank
+    private String gender;
 
-        @Email(message = "Invalid Email Id")
-        private String userEmail;
+    @Size(min = 10, max = 50, message = "Write About Yourself")
+    @NotEmpty
+    private String userAbout;
 
-        @NotEmpty(message = "First letter Should Be Capital")
-        private String userPassword;
+    private String imageName;
 
-        @NotEmpty
-        private String Gender;
-
-        @Size(min = 100, max = 10000, message = "Write About Yourself")
-        private String userAbout;
-
-        private String imageName;
-
-    }
+}
 
 //pattrn
 //@custom
-
