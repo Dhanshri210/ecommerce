@@ -22,8 +22,8 @@ public class UserDto {
     @Email(message = "Invalid Email Id")
     private String userEmail;
 
-    @NotEmpty(message = "First letter Should Be Capital")
-   // @Pattern(regexp = "^[a-zA-z5-9]{8}")
+     @NotEmpty(message = "First letter Should Be Capital")
+     @Pattern(regexp = "[0-9][@#$%][a-z][A-Z]")
     private String userPassword;
 
     @NotBlank
