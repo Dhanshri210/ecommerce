@@ -22,21 +22,16 @@ import java.time.LocalDateTime;
 public class BaseEntity {
 
     @Column(name="IS_ACTIVE")
-    private String isActive;
+    private boolean isActive=true;
 
     @Column(name="CREATED_BY")
     @CreatedBy
     private String createdBy;
 
-    @Column(name="CREATE_DATE",updatable = false)
+    @Column(name="ADDED_DATE",updatable = false)
     @CreationTimestamp
-    private LocalDateTime createdOn;
-
-    @Column(name="MODIFIED_BY")
-    @LastModifiedBy
-    private String lastModifiedBy;
+    private LocalDateTime addedDateBy;
 
     @Column(name="UPDATE_DATE",updatable = false)
-    @UpdateTimestamp
-    private LocalDateTime modifiedOn;
+    private String updatedBy;
 }

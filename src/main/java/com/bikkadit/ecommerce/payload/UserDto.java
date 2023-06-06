@@ -1,4 +1,5 @@
 package com.bikkadit.ecommerce.payload;
+import com.bikkadit.ecommerce.entity.BaseEntity;
 import jakarta.validation.constraints.*;
 import lombok.*;
 @Setter

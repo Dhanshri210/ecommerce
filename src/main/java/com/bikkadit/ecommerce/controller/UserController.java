@@ -1,6 +1,8 @@
 package com.bikkadit.ecommerce.controller;
 import com.bikkadit.ecommerce.constant.AppConstant;
+import com.bikkadit.ecommerce.entity.BaseEntity;
 import com.bikkadit.ecommerce.helper.ApiResponse;
+import com.bikkadit.ecommerce.payload.BaseEntityDto;
 import com.bikkadit.ecommerce.service.UserService;
 import com.bikkadit.ecommerce.payload.UserDto;
 import jakarta.validation.Valid;
@@ -15,7 +17,7 @@ import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api")
-public class UserController {
+public class UserController extends BaseEntityDto {
     @Autowired
     private UserService userService;
 
