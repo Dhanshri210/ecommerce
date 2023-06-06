@@ -74,15 +74,15 @@
     </root>
 
     <!-- LOG at TRACE level -->
-    <logger name="com.bikkadit" level="trace" additivity="false">
+    <logger name="com.bikkadit.ecommerce" level="trace" additivity="false">
         <appender-ref ref="ASYNC_FILE"/>
         <appender-ref ref="ASYNC_CONSOLE"/>
     </logger>
-    <logger name="com.bikkadit" level="info" additivity="false">
+    <logger name="com.bikkadit.ecommerce" level="info" additivity="false">
         <appender-ref ref="ASYNC_FILE"/>
         <appender-ref ref="ASYNC_CONSOLE"/>
     </logger>
-    <logger name="com.bikkadit" level="debug" additivity="false">
+    <logger name="com.bikkadit.ecommerce" level="debug" additivity="false">
         <appender-ref ref="ASYNC_FILE"/>
         <appender-ref ref="ASYNC_CONSOLE"/>
     </logger>
