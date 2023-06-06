@@ -1,11 +1,11 @@
-package com.bikkadit.serviceimpl;
+package com.bikkadit.ecommerce.serviceimpl;
 
-import com.bikkadit.constant.AppConstant;
-import com.bikkadit.entity.User;
-import com.bikkadit.exception.ResourceNotFoundException;
-import com.bikkadit.payload.UserDto;
-import com.bikkadit.repository.UserRepository;
-import com.bikkadit.service.UserService;
+import com.bikkadit.ecommerce.constant.AppConstant;
+import com.bikkadit.ecommerce.entity.User;
+import com.bikkadit.ecommerce.exception.ResourceNotFoundException;
+import com.bikkadit.ecommerce.payload.UserDto;
+import com.bikkadit.ecommerce.repository.UserRepository;
+import com.bikkadit.ecommerce.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

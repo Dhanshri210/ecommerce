@@ -1,4 +1,4 @@
-package com.bikkadit.exception;
+package com.bikkadit.ecommerce.exception;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

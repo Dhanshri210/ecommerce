@@ -1,6 +1,6 @@
-package com.bikkadit.exception;
+package com.bikkadit.ecommerce.exception;
 
-import com.bikkadit.helper.ApiResponse;
+import com.bikkadit.ecommerce.helper.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

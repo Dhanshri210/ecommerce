@@ -1,4 +1,4 @@
-package com.bikkadit.entity;
+package com.bikkadit.ecommerce.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

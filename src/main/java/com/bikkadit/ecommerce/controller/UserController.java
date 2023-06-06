@@ -1,8 +1,8 @@
-package com.bikkadit.controller;
-import com.bikkadit.constant.AppConstant;
-import com.bikkadit.helper.ApiResponse;
-import com.bikkadit.payload.UserDto;
-import com.bikkadit.service.UserService;
+package com.bikkadit.ecommerce.controller;
+import com.bikkadit.ecommerce.constant.AppConstant;
+import com.bikkadit.ecommerce.helper.ApiResponse;
+import com.bikkadit.ecommerce.service.UserService;
+import com.bikkadit.ecommerce.payload.UserDto;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

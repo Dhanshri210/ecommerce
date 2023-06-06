@@ -1,4 +1,4 @@
-package com.bikkadit;
+package com.bikkadit.ecommerce;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;

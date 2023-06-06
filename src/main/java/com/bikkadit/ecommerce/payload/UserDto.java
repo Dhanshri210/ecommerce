@@ -1,4 +1,4 @@
-package com.bikkadit.payload;
+package com.bikkadit.ecommerce.payload;
 import jakarta.validation.constraints.*;
 import lombok.*;
 @Setter

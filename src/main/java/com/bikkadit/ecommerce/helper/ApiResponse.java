@@ -1,4 +1,4 @@
-package com.bikkadit.helper;
+package com.bikkadit.ecommerce.helper;
 
 import lombok.*;
 import org.springframework.http.HttpStatus;

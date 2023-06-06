@@ -1,4 +1,4 @@
-package com.bikkadit;
+package com.bikkadit.ecommerce;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.bikkadit.ecommerce;
+package com.bikkadit.ecommerce.ecommerce;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

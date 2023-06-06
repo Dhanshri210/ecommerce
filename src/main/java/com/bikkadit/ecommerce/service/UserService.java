@@ -1,6 +1,6 @@
-package com.bikkadit.service;
+package com.bikkadit.ecommerce.service;
 
-import com.bikkadit.payload.UserDto;
+import com.bikkadit.ecommerce.payload.UserDto;
 
 import java.util.List;
 import java.util.stream.Stream;
