@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(UserDto userdto, String userId) {
         logger.info("Request Created For Update User");
         User user = this.userRepository.findById(userId).orElseThrow(()
-                -> new RuntimeException(AppConstant.NOT_FOUND));
+                -> new ResourceNotFoundException(AppConstant.NOT_FOUND));
         user.setUserName(userdto.getUserName());
         user.setUserEmail(userdto.getUserEmail());
         user.setUserPassword(userdto.getUserPassword());
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(String userId) {
         logger.info("Request Created For Delete User");
         User user = this.userRepository.findById(userId).orElseThrow(()
-                -> new RuntimeException(AppConstant.NOT_FOUND));
+                -> new ResourceNotFoundException(AppConstant.NOT_FOUND));
         logger.info("Request Completed For Delete User");
         userRepository.delete(user);
     }
@@ -90,24 +90,21 @@ public class UserServiceImpl implements UserService {
     public UserDto getUser(String userId) {
         logger.info("Request Created For Fetch Single User");
         User user = this.userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User","id",userId));
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstant.USER_NOT_FOUND));
         logger.info("Request Completed For Fetch Single User");
         return this.UsertoDto(user);
     }
+
+    // GET USER BY EMAIL ID
 
     @Override
     public UserDto getUserByEmail(String userEmail) {
         logger.info("Request Created For Fetch User By Email Id");
       User user = this.userRepository.findByUserEmail(userEmail)
-                .orElseThrow(()-> new ResourceNotFoundException("User","id",userEmail));
+                .orElseThrow(()-> new ResourceNotFoundException(AppConstant.EMAIL_ERROR));
         logger.info("Request Completed For Fetch User By Email Id");
         return this.UsertoDto(user);
     }
-
-
-    // GET USER BY EMAIL ID
-
-
 
     // SEARCH USERS
 

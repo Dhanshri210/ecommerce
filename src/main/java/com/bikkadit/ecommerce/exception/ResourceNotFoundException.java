@@ -1,23 +1,19 @@
 package com.bikkadit.ecommerce.exception;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
 @NoArgsConstructor
+@Builder
 public class ResourceNotFoundException extends RuntimeException{
 
     String resourceName;
-    String fieldName;
-    String fieldValue;
 
-    public ResourceNotFoundException(String resourceName, String fieldName, String fieldValue) {
-        super(String.format("%s Not Found With %s : %s", resourceName, fieldName, fieldValue));
+    public ResourceNotFoundException(String resourceName) {
+        super(String.format("%s Not Found With %s : %s", resourceName));
         this.resourceName = resourceName;
-        this.fieldName = fieldName;
-        this.fieldValue=fieldValue;
+
     }
 
 }
