@@ -20,7 +20,7 @@ public class UserDto {
     @Size(min = 5, max = 30, message = "Fill Proper Address")
     private String userAdd;
 
-    @Pattern(regexp = "[a-z][@#$%][a-z].[a-z]")
+    @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")
     @Email(message = "Invalid Email Id")
     private String userEmail;
 
