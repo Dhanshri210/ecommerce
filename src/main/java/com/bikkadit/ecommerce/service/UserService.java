@@ -13,7 +13,7 @@ public interface UserService {
 
     void deleteUser(String userId);
 
-    List<UserDto> getAllUser(Integer pageNumber,Integer pageSize);
+    List<UserDto> getAllUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
     UserDto getUser(String userId);
 
