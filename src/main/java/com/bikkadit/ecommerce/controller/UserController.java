@@ -73,7 +73,7 @@ public class UserController extends BaseEntityDto {
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity<ApiResponse> deleteUser
             (@PathVariable String userId) {
-        logger.warn("Request Created For Delete User"        +userId);
+        logger.warn("Request Created For Delete User"       +userId);
         userService.deleteUser(userId);
         ApiResponse message = ApiResponse
                 .builder()

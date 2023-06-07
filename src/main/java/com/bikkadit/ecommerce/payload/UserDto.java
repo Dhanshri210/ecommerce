@@ -1,5 +1,6 @@
 package com.bikkadit.ecommerce.payload;
 import com.bikkadit.ecommerce.entity.BaseEntity;
+import com.bikkadit.ecommerce.utils.ImageNameValid;
 import jakarta.validation.constraints.*;
 import lombok.*;
 @Setter
@@ -19,6 +20,7 @@ public class UserDto {
     @Size(min = 5, max = 30, message = "Fill Proper Address")
     private String userAdd;
 
+    @Pattern(regexp = "[a-z][@#$%][a-z].[a-z]")
     @Email(message = "Invalid Email Id")
     private String userEmail;
 
@@ -33,9 +35,10 @@ public class UserDto {
     @NotEmpty
     private String userAbout;
 
+    @ImageNameValid(message="Image Name is Default")
     private String imageName;
 
 }
 
-//pattrn
+
 //@custom
