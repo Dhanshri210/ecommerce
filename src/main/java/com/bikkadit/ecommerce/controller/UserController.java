@@ -95,10 +95,12 @@ public class UserController extends BaseEntityDto {
      */
 
     @GetMapping("/getAllUser")
-    public ResponseEntity<List<UserDto>> getAllUser() {
+    public ResponseEntity<List<UserDto>> getAllUser(
+            @RequestParam(value = "pageNumber",defaultValue = "0",required = false)Integer pageNumber,
+            @RequestParam(value = "pageSize",defaultValue = "5",required = false)Integer pageSize){
         logger.info("All Users Are Fetch Successfully");
         return new ResponseEntity<List<UserDto>>
-                (userService.getAllUser(), HttpStatus.OK);
+                (userService.getAllUser(pageNumber,pageSize), HttpStatus.OK);
 
     }
 

@@ -10,7 +10,11 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -75,9 +79,11 @@ public class UserServiceImpl implements UserService {
     // GET ALL USERS
 
     @Override
-    public List<UserDto> getAllUser() {
+    public List<UserDto> getAllUser(Integer pageNumber, Integer pageSize) {
         logger.info("Request Created For Fetch All User");
-        List<User> users = userRepository.findAll();
+        Pageable pageable= PageRequest.of(pageNumber,pageSize);
+        Page<User> users = userRepository.findAll(pageable);
+        List<User> page=users.getContent();
         List<UserDto> collect = users.stream().map(user
                 -> UsertoDto(user)).collect(Collectors.toList());
         logger.info("Request Completed For Fetch All User");
