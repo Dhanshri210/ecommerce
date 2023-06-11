@@ -3,6 +3,7 @@ package com.bikkadit.ecommerce.serviceimpl;
 import com.bikkadit.ecommerce.constant.AppConstant;
 import com.bikkadit.ecommerce.entity.User;
 import com.bikkadit.ecommerce.exception.ResourceNotFoundException;
+import com.bikkadit.ecommerce.helper.Helpers;
 import com.bikkadit.ecommerce.payload.PageableResponse;
 import com.bikkadit.ecommerce.payload.UserDto;
 import com.bikkadit.ecommerce.repository.UserRepository;
@@ -82,24 +83,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageableResponse<UserDto> getAllUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
-        logger.info("Request Created For Fetch All User");
+        logger.info("Request Created For Fetch All User with PageNumbers");
       // Sort sort= Sort.by(sortBy);
         Sort sort=(sortDir.equalsIgnoreCase("desc"))?
                 (Sort.by(sortBy).descending())
                 :(Sort.by(sortBy).ascending());
         Pageable pageable= PageRequest.of(pageNumber,pageSize);
         Page<User> users = userRepository.findAll(pageable);
-        List<User> page=users.getContent();
-        List<UserDto> collect = users.stream().map(user
-                -> UsertoDto(user)).collect(Collectors.toList());
-        logger.info("Request Completed For Fetch All User");
-        PageableResponse<UserDto> response = new PageableResponse<>();
-        response.setContent(collect);
-        response.setPageNumber(users.getNumber());
-        response.setTotalPages(users.getTotalPages());
-        response.setPageSize(users.getSize());
-        response.setTotalElement(users.getTotalElements());
-        response.setLastPage(users.isLast());
+        PageableResponse<UserDto> response= Helpers.getPageableResponse(users,UserDto.class);
+        logger.info("Request Completed For Fetch All User with page Numbers");
         return response;
     }
 
