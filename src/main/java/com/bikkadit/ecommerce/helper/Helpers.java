@@ -18,7 +18,7 @@ public class Helpers {
     @Autowired
     private ModelMapper modelMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(Helpers.class);
 
     public static <U,V>PageableResponse<V> getPageableResponse(Page<U> page,Class<V> type){
         logger.info("Page Details Allocated form Helper class");

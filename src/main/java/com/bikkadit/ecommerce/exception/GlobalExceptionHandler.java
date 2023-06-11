@@ -11,7 +11,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +42,17 @@ public class GlobalExceptionHandler {
             response.put(field,message);
         });
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(BadApiRequest.class)
+    public ResponseEntity<ApiResponse> handleBadApiRequest(BadApiRequest ex) {
+        logger.info("Bad Api Request Exception Handler Working....");
+        ApiResponse apiresponse = ApiResponse
+                .builder()
+                .message(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST)
+                .success(false)
+                .build();
+        return new ResponseEntity<ApiResponse>(apiresponse, HttpStatus.BAD_REQUEST);
     }
 
 }
