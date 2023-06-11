@@ -27,26 +27,26 @@ public class FileServiceImpl implements FileService {
         String extension = origionalFileName.substring(origionalFileName.lastIndexOf("."));
         String fileNameWithExtension = fileName + extension;
         String fullPathWithFileName = path + File.separator + fileNameWithExtension;
-        if (extension.equalsIgnoreCase("jpg") || extension.equalsIgnoreCase("jpeg")
-                || extension.equalsIgnoreCase("png")) {
+        if (extension.equalsIgnoreCase(".jpg") || extension.equalsIgnoreCase(".jpeg")
+                || extension.equalsIgnoreCase(".png")) {
 
             //save File
             File folder = new File(path);
             if(!folder.exists()) {
                 //Create Folders
-                folder.mkdirs();
+                folder.mkdir();
             }
                 //upload image
                 Files.copy(file.getInputStream(), Paths.get(fullPathWithFileName));
                 return fileNameWithExtension;
             }
          else {
-            throw new BadApiRequest("File With This " + extension + "not Allowed !!");
+            throw new BadApiRequest("File With This " + extension + " not Allowed !!");
         }
     }
     @Override
     public InputStream getResource(String path, String name) throws FileNotFoundException {
-        String fullPath= path+ File.separator + name;
+        String fullPath= path + File.separator + name;
         InputStream inputStream = new FileInputStream(fullPath) ;
         return inputStream;
     }

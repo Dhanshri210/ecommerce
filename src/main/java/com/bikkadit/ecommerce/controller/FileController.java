@@ -1,5 +1,6 @@
 package com.bikkadit.ecommerce.controller;
 
+import com.bikkadit.ecommerce.entity.BaseEntity;
 import com.bikkadit.ecommerce.helper.ImageResponse;
 import com.bikkadit.ecommerce.payload.UserDto;
 import com.bikkadit.ecommerce.service.FileService;
@@ -10,15 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 @RestController
+@RequestMapping("/api/file")
 public class FileController {
 
     @Autowired
@@ -33,16 +32,16 @@ public class FileController {
     private String imageUploadPath;
 
     @PostMapping("/image/{userId}")
-    public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("userImage")
+    public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("imageName")
                                                              MultipartFile image, @PathVariable String userId) throws IOException {
         logger.info("Request Created For Uploading user Image {} :  +userId");
-        String imageName= fileService.uploadFile(image,imageUploadPath);
-     UserDto user=userService.getUser(userId);
-     user.setImageName(imageName);
-     UserDto userdto =userService.updateUser(user,userId);
-     ImageResponse response = ImageResponse
+        String images= fileService.uploadFile(image,imageUploadPath);
+         UserDto user=userService.getUser(userId);
+         user.setImageName(images);
+         UserDto userdto =userService.updateUser(user,userId);
+         ImageResponse response = ImageResponse
              .builder()
-             .imageName(imageName)
+             .imageName(images)
              .success(true)
              .status(HttpStatus.CREATED)
              .build();
