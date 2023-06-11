@@ -27,10 +27,12 @@ public class FileServiceImpl implements FileService {
         String extension = origionalFileName.substring(origionalFileName.lastIndexOf("."));
         String fileNameWithExtension = fileName + extension;
         String fullPathWithFileName = path + File.separator + fileNameWithExtension;
+        logger.info("Full Image Path:  {}", fullPathWithFileName);
         if (extension.equalsIgnoreCase(".jpg") || extension.equalsIgnoreCase(".jpeg")
                 || extension.equalsIgnoreCase(".png")) {
 
             //save File
+            logger.info("File Extension is {}" ,extension);
             File folder = new File(path);
             if(!folder.exists()) {
                 //Create Folders
