@@ -19,13 +19,14 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/api")
 public class UserController extends BaseEntityDto {
+
     @Autowired
     private UserService userService;
 
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     /*
-     * @author Dhanshri Ithawale
+     * @author Dhanshri
      *
      * @apiNote This Api is used For Create User
      *
@@ -43,11 +44,11 @@ public class UserController extends BaseEntityDto {
     }
 
     /*
-     * @author Dhanshri Ithawale
+     * @author Dhanshri
      *
      * @apiNote This Api is used For Update User
      *
-     * @param userDto
+     * @param userId
      *
      * @return
      */
@@ -62,11 +63,11 @@ public class UserController extends BaseEntityDto {
     }
 
     /*
-     * @author Dhanshri Ithawale
+     * @author Dhanshri
      *
      * @apiNote This Api is used For Delete User
      *
-     * @param userDto
+     * @param userId
      *
      * @return
      */
@@ -86,7 +87,7 @@ public class UserController extends BaseEntityDto {
     }
 
     /*
-     * @author Dhanshri Ithawale
+     * @author Dhanshri
      *
      * @apiNote This Api is used For Get All User
      *
@@ -108,11 +109,11 @@ public class UserController extends BaseEntityDto {
     }
 
     /*
-     * @author Dhanshri Ithawale
+     * @author Dhanshri
      *
      * @apiNote This Api is used For Get Single User
      *
-     * @param userDto
+     * @param userId
      *
      * @return
      */
@@ -125,7 +126,7 @@ public class UserController extends BaseEntityDto {
     }
 
     /*
-     * @author Dhanshri Ithawale
+     * @author Dhanshri
      *
      * @apiNote This Api is used For Fetch User by Emailid
      *
@@ -143,7 +144,7 @@ public class UserController extends BaseEntityDto {
     }
 
     /*
-     * @author Dhanshri Ithawale
+     * @author Dhanshri
      *
      * @apiNote This Api is used For Search User
      *

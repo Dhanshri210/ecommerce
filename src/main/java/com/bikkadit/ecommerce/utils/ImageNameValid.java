@@ -11,17 +11,14 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = ImageNameValidator.class)
 public  @interface ImageNameValid {
 
+    //Creating Annotation
+
     //Error Message
         String message() default "Invalid Image Name/Details";
 
         //represent group of contraint
         Class<?>[] groups() default { };
 
-//additional information about annotation
+      //additional information about annotation
         Class<? extends Payload>[] payload() default { };
-
-
-
-
-
 }

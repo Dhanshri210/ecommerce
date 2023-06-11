@@ -34,6 +34,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException ex) {
+        logger.info("Method Argument Exception Working...");
        List<ObjectError> allErrors= ex.getBindingResult().getAllErrors();
         Map<String, Object> response = new HashMap<>();
         allErrors.stream().forEach(objectError -> {

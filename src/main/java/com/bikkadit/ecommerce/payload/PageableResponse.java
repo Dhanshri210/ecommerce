@@ -1,7 +1,6 @@
 package com.bikkadit.ecommerce.payload;
 
 import lombok.*;
-
 import java.util.List;
 @Getter
 @Setter

@@ -14,6 +14,7 @@ import lombok.*;
 @Table(name="ELECTRONICS")
 @Entity
 public class User {
+
     @Id
     private String userId;
 

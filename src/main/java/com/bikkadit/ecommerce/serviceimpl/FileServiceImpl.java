@@ -19,6 +19,7 @@ public class FileServiceImpl implements FileService {
 
     private static Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
+    // Image Uploading
     @Override
     public String uploadFile(MultipartFile file, String path) throws IOException {
         String origionalFileName = file.getOriginalFilename();
@@ -28,17 +29,19 @@ public class FileServiceImpl implements FileService {
         String fileNameWithExtension = fileName + extension;
         String fullPathWithFileName = path + File.separator + fileNameWithExtension;
         logger.info("Full Image Path:  {}", fullPathWithFileName);
-        if (extension.equalsIgnoreCase(".jpg") || extension.equalsIgnoreCase(".jpeg")
-                || extension.equalsIgnoreCase(".png")) {
+            if (extension.equalsIgnoreCase(".jpg") ||
+                extension.equalsIgnoreCase(".jpeg") ||
+                extension.equalsIgnoreCase(".png") ||
+                extension.equalsIgnoreCase(".pdf")) {
 
-            //save File
+                //save File
             logger.info("File Extension is {}" ,extension);
             File folder = new File(path);
             if(!folder.exists()) {
                 //Create Folders
-                folder.mkdir();
+                folder.mkdirs();
             }
-                //upload image
+            //upload image
                 Files.copy(file.getInputStream(), Paths.get(fullPathWithFileName));
                 return fileNameWithExtension;
             }

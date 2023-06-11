@@ -17,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -52,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(UserDto userdto, String userId) {
-        logger.info("Request Created For Update User");
+        logger.info("Request Created For Update User :{}" +userId);
         User user = this.userRepository.findById(userId).orElseThrow(()
                 -> new ResourceNotFoundException(AppConstant.NOT_FOUND));
         user.setUserName(userdto.getUserName());
@@ -64,7 +63,7 @@ public class UserServiceImpl implements UserService {
         user.setGender(userdto.getGender());
         User save = this.userRepository.save(user);
         UserDto user2 = this.UsertoDto(save);
-        logger.info("Request Completed For Update User");
+        logger.info("Request Completed For Update User : {}" +userId);
         return user2;
     }
 
@@ -72,14 +71,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String userId) {
-        logger.info("Request Created For Delete User");
+        logger.info("Request Created For Delete User : {}" +userId);
         User user = this.userRepository.findById(userId).orElseThrow(()
                 -> new ResourceNotFoundException(AppConstant.NOT_FOUND));
-        logger.info("Request Completed For Delete User");
+        logger.info("Request Completed For Delete User : {}" +userId);
         userRepository.delete(user);
     }
 
-    // GET ALL USERS
+    // GET ALL USERS And Page Numbering & Sorting
 
     @Override
     public PageableResponse<UserDto> getAllUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
@@ -99,10 +98,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(String userId) {
-        logger.info("Request Created For Fetch Single User");
+        logger.info("Request Created For Fetch Single User : {}" +userId);
         User user = this.userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppConstant.USER_NOT_FOUND));
-        logger.info("Request Completed For Fetch Single User");
+        logger.info("Request Completed For Fetch Single User :{}" +userId);
         return this.UsertoDto(user);
     }
 
@@ -110,10 +109,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserByEmail(String userEmail) {
-        logger.info("Request Created For Fetch User By Email Id");
+        logger.info("Request Created For Fetch User By Email Id : {}" +userEmail);
       User user = this.userRepository.findByUserEmail(userEmail)
                 .orElseThrow(()-> new ResourceNotFoundException(AppConstant.EMAIL_ERROR));
-        logger.info("Request Completed For Fetch User By Email Id");
+        logger.info("Request Completed For Fetch User By Email Id : {}" +userEmail);
         return this.UsertoDto(user);
     }
 
@@ -127,6 +126,10 @@ public class UserServiceImpl implements UserService {
         logger.info("Request Completed For Searching User");
         return  users;
     }
+
+
+
+    //Converting
 
     private UserDto UsertoDto(User user) {
 

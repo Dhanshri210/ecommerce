@@ -5,13 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseEntityDto {
+public class BaseEntityDto implements Serializable {
 
     @NotEmpty
     @Size(min=5 ,max=14,message = "Write Your First & Last Name")

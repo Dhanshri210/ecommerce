@@ -9,9 +9,10 @@ import org.slf4j.LoggerFactory;
 public class ImageNameValidator implements ConstraintValidator<ImageNameValid,String> {
 
     private static Logger logger = LoggerFactory.getLogger(ImageNameValidator.class);
+
+
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-
         logger.info("Message From is Valid annotaton : {}",value);
         //logic
         if (value.isEmpty()){
@@ -21,8 +22,5 @@ public class ImageNameValidator implements ConstraintValidator<ImageNameValid,St
                 return true;
         }
         }
-
-
-
     }
 
