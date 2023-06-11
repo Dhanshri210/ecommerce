@@ -3,6 +3,7 @@ import com.bikkadit.ecommerce.constant.AppConstant;
 import com.bikkadit.ecommerce.entity.BaseEntity;
 import com.bikkadit.ecommerce.helper.ApiResponse;
 import com.bikkadit.ecommerce.payload.BaseEntityDto;
+import com.bikkadit.ecommerce.payload.PageableResponse;
 import com.bikkadit.ecommerce.service.UserService;
 import com.bikkadit.ecommerce.payload.UserDto;
 import jakarta.validation.Valid;
@@ -95,13 +96,13 @@ public class UserController extends BaseEntityDto {
      */
 
     @GetMapping("/getAllUser")
-    public ResponseEntity<List<UserDto>> getAllUser(
+    public ResponseEntity<PageableResponse<UserDto>> getAllUser(
             @RequestParam(value = "pageNumber",defaultValue = "0",required = false)Integer pageNumber,
             @RequestParam(value = "pageSize",defaultValue = "5",required = false)Integer pageSize,
             @RequestParam(value = "sortBy",defaultValue = "name",required = false)String sortBy,
             @RequestParam(value = "sortDir",defaultValue = "asc",required = false)String sortDir){
         logger.info("All Users Are Fetch Successfully");
-        return new ResponseEntity<List<UserDto>>
+        return new ResponseEntity<PageableResponse<UserDto>>
                 (userService.getAllUser(pageNumber,pageSize,sortBy,sortDir),HttpStatus.OK);
 
     }

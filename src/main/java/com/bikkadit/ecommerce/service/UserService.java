@@ -1,5 +1,6 @@
 package com.bikkadit.ecommerce.service;
 
+import com.bikkadit.ecommerce.payload.PageableResponse;
 import com.bikkadit.ecommerce.payload.UserDto;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface UserService {
 
     void deleteUser(String userId);
 
-    List<UserDto> getAllUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
+    PageableResponse<UserDto> getAllUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
     UserDto getUser(String userId);
 

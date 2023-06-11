@@ -3,6 +3,7 @@ package com.bikkadit.ecommerce.serviceimpl;
 import com.bikkadit.ecommerce.constant.AppConstant;
 import com.bikkadit.ecommerce.entity.User;
 import com.bikkadit.ecommerce.exception.ResourceNotFoundException;
+import com.bikkadit.ecommerce.payload.PageableResponse;
 import com.bikkadit.ecommerce.payload.UserDto;
 import com.bikkadit.ecommerce.repository.UserRepository;
 import com.bikkadit.ecommerce.service.UserService;
@@ -80,7 +81,7 @@ public class UserServiceImpl implements UserService {
     // GET ALL USERS
 
     @Override
-    public List<UserDto> getAllUser(Integer pageNumber, Integer pageSize,String sortBy,String sortDir) {
+    public PageableResponse<UserDto> getAllUser(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
         logger.info("Request Created For Fetch All User");
       // Sort sort= Sort.by(sortBy);
         Sort sort=(sortDir.equalsIgnoreCase("desc"))?
@@ -92,7 +93,14 @@ public class UserServiceImpl implements UserService {
         List<UserDto> collect = users.stream().map(user
                 -> UsertoDto(user)).collect(Collectors.toList());
         logger.info("Request Completed For Fetch All User");
-        return collect;
+        PageableResponse<UserDto> response = new PageableResponse<>();
+        response.setContent(collect);
+        response.setPageNumber(users.getNumber());
+        response.setTotalPages(users.getTotalPages());
+        response.setPageSize(users.getSize());
+        response.setTotalElement(users.getTotalElements());
+        response.setLastPage(users.isLast());
+        return response;
     }
 
     // GET SINGLE USER
