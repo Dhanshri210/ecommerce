@@ -24,6 +24,16 @@ public class CategoryController {
 
     private static Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
+
+    /*
+     * @author Dhanshri
+     *
+     * @apiNote This Api is used For Create Category
+     *
+     * @param categoryDto
+     *
+     * @return
+     */
     @PostMapping("/create")
     public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto){
         logger.info("Request Created For Create Category");
@@ -31,6 +41,16 @@ public class CategoryController {
         logger.info("Request Completed For Create Category");
         return new ResponseEntity<>(catDto, HttpStatus.CREATED);
     }
+
+    /*
+     * @author Dhanshri
+     *
+     * @apiNote This Api is used For Update Category
+     *
+     * @param categoryId
+     *
+     * @return
+     */
 
     @PutMapping("/updates/{categoryId}")
     public ResponseEntity<CategoryDto> updateCategory(@Valid @PathVariable("categoryId")
@@ -40,6 +60,16 @@ public class CategoryController {
         logger.info("Request Completed For Update User :{}"    +categoryId);
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
+
+    /*
+     * @author Dhanshri
+     *
+     * @apiNote This Api is used For Delete Category
+     *
+     * @param categoryId
+     *
+     * @return
+     */
 
     @DeleteMapping("/deletes/{categoryId}")
     public ResponseEntity<ApiResponse> deleteUser
@@ -54,6 +84,15 @@ public class CategoryController {
         logger.warn("Request Completed For Update User : {}" +categoryId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+    /*
+     * @author Dhanshri
+     *
+     * @apiNote This Api is used For Get All Category
+     *
+     * @param CategoryDto
+     *
+     * @return
+     */
 
     @GetMapping("/getAllCategory")
     public ResponseEntity<PageableResponse<CategoryDto>> getAllCategory(
@@ -65,6 +104,17 @@ public class CategoryController {
         return new ResponseEntity<PageableResponse<CategoryDto>>
                 (categoryService.getAllCategory(pageNumber,pageSize,sortBy,sortDir),HttpStatus.OK);
     }
+
+    /*
+     * @author Dhanshri
+     *
+     * @apiNote This Api is used For Get Single category
+     *
+     * @param categoryId
+     *
+     * @return
+     */
+
     @GetMapping("/getSinglecat/{categoryId}")
     public ResponseEntity<CategoryDto> getSingle(@PathVariable Integer categoryId) {
         logger.info("Single Users Fetch Successfully : {}"   +categoryId);
