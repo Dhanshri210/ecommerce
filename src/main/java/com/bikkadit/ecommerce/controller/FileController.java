@@ -3,7 +3,9 @@ package com.bikkadit.ecommerce.controller;
 import com.bikkadit.ecommerce.entity.BaseEntity;
 import com.bikkadit.ecommerce.helper.ImageResponse;
 import com.bikkadit.ecommerce.payload.BaseEntityDto;
+import com.bikkadit.ecommerce.payload.CategoryDto;
 import com.bikkadit.ecommerce.payload.UserDto;
+import com.bikkadit.ecommerce.service.CategoryService;
 import com.bikkadit.ecommerce.service.FileService;
 import com.bikkadit.ecommerce.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,6 +34,9 @@ public class FileController extends BaseEntityDto {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
     @Value("${user.profile.image.path}")
@@ -50,7 +55,7 @@ public class FileController extends BaseEntityDto {
     @PostMapping("/image/{userId}")
     public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("imageName")
                                                              MultipartFile image, @PathVariable String userId) throws IOException {
-        logger.info("Request Created For Uploading user Image {} :  +userId");
+        logger.info("Request Created For Uploading user Image {}  ", userId);
         String images= fileService.uploadFile(image,imageUploadPath);
          UserDto user=userService.getUser(userId);
          user.setImageName(images);
@@ -61,7 +66,7 @@ public class FileController extends BaseEntityDto {
              .success(true)
              .status(HttpStatus.CREATED)
              .build();
-            logger.info("Request Completed For Uploading user Image {} :  +userId");
+            logger.info("Request Completed For Uploading user Image {} ", userId);
            return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
     /*
@@ -79,6 +84,34 @@ public class FileController extends BaseEntityDto {
         UserDto users= userService.getUser(userId);
         logger.info("user image name :{} ",users.getImageName());
         InputStream resource= fileService.getResource(imageUploadPath,users.getImageName());
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource,response.getOutputStream());
+        logger.info("Image Getting Successfully");
+    }
+
+    @PostMapping("/imagecover/{categoryId}")
+    public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("imageName")
+                                                         MultipartFile image, @PathVariable Integer categoryId) throws IOException {
+        logger.info("Request Created For Uploading cover Image {} :",  categoryId);
+        String images= fileService.uploadFile(image,imageUploadPath);
+        CategoryDto cat=categoryService.getsingle(categoryId);
+        cat.setCoverImage(images);
+        CategoryDto categoryDto =categoryService.updateCategory(cat,categoryId);
+        ImageResponse response = ImageResponse
+                .builder()
+                .imageName(images)
+                .success(true)
+                .status(HttpStatus.CREATED)
+                .build();
+        logger.info("Request Completed For Uploading cover Image {}",  categoryId);
+        return new ResponseEntity<>(response,HttpStatus.CREATED);
+    }
+
+    @GetMapping("/imagescovers/{categoryId}")
+    public void serveUserImage(@PathVariable Integer categoryId, HttpServletResponse response) throws IOException {
+        CategoryDto cat= categoryService.getsingle(categoryId);
+        logger.info("cover image name :{} ",cat.getCoverImage());
+        InputStream resource= fileService.getResource(imageUploadPath,cat.getCoverImage());
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         StreamUtils.copy(resource,response.getOutputStream());
         logger.info("Image Getting Successfully");
