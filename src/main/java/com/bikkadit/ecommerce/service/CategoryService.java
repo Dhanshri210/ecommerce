@@ -9,15 +9,15 @@ public interface CategoryService {
     CategoryDto createCategory(CategoryDto categoryDto);
 
     //Update Category
-    CategoryDto updateCategory(CategoryDto categoryDto,String categoryId);
+    CategoryDto updateCategory(CategoryDto categoryDto,Integer categoryId);
 
     //Delete Category
-    void deleteCategory(String categoryId);
+    void deleteCategory(Integer categoryId);
 
     //Get All Category
-    PageableResponse<CategoryDto> getAllCategory();
+    PageableResponse<CategoryDto> getAllCategory(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
     //Get Single Category
-    CategoryDto getsingle(String categoryId);
+    CategoryDto getsingle(Integer categoryId);
 
 }

@@ -17,7 +17,7 @@ public class Category {
 
     @Id
     @Column(name="CAT_ID")
-    private String categoryId;
+    private Integer categoryId;
 
     @Column(name="CAT_TITLE",length = 50,nullable = false)
     private String categoryTitle;

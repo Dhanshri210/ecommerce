@@ -13,7 +13,7 @@ public class CategoryDto {
 
     @NotBlank
     @Size(min=5,max=15,message = "Title Name Start With Capital Letters")
-    private String categoryTitle;
+    private Integer categoryTitle;
 
     @NotBlank
     @Size(min = 5,max=100,message = "Write Few Lines Your Titles")
