@@ -37,9 +37,9 @@ public class UserController extends BaseEntityDto {
 
     @PostMapping("/Create")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-        logger.info("Request Created For Create User"   +userDto);
+        logger.info("Request Created For Create User");
         UserDto userDto1 = userService.createUser(userDto);
-        logger.info("Request Completed For Create User"    +userDto);
+        logger.info("Request Completed For Create User");
         return new ResponseEntity<>(userDto1, HttpStatus.CREATED);
     }
 
@@ -75,14 +75,14 @@ public class UserController extends BaseEntityDto {
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity<ApiResponse> deleteUser
             (@PathVariable String userId) {
-        logger.warn("Request Created For Delete User"       +userId);
+        logger.warn("Request Created For Delete User : {}"  +userId);
         userService.deleteUser(userId);
         ApiResponse message = ApiResponse
                 .builder()
                 .message(AppConstant.USER_DELETE)
                 .success(true)
                 .status(HttpStatus.OK).build();
-        logger.warn("Request Completed For Update User"      +userId);
+        logger.warn("Request Completed For Update User : {}"   +userId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
@@ -120,7 +120,7 @@ public class UserController extends BaseEntityDto {
 
     @GetMapping("/getSingle/{userId}")
     public ResponseEntity<UserDto> getUser(@PathVariable String userId) {
-        logger.info("Single Users Fetch Successfully"    +userId);
+        logger.info("Single Users Fetch Successfully : {}"    +userId);
         return new ResponseEntity<>(userService.getUser(userId)
                 , HttpStatus.OK);
     }

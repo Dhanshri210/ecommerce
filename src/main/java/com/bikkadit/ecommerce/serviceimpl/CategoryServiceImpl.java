@@ -83,8 +83,10 @@ public class CategoryServiceImpl implements CategoryService {
     // Get Single Category By ID
     @Override
     public CategoryDto getsingle(Integer categoryId) {
+        logger.info("Request Created For Fetch Single Category : {}" +categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(() ->
                 new ResourceNotFoundException(AppConstant.FETCH_CATEGORY));
+        logger.info("Request Completed For Fetch Single Category : {}" +categoryId);
         return modelMapper.map(category, CategoryDto.class);
     }
 }
