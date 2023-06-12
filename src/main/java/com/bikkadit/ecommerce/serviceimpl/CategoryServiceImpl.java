@@ -20,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -36,9 +38,9 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto createCategory(CategoryDto categoryDto) {
         logger.info("Request Create For Create Category");
         Category category = this.modelMapper.map(categoryDto, Category.class);
-        Category save = categoryRepository.save(category);
+        Category savecat = categoryRepository.save(category);
         logger.info("Request Completed For Create Category");
-        return modelMapper.map(save, CategoryDto.class);
+        return modelMapper.map(savecat, CategoryDto.class);
     }
 
     //Update category

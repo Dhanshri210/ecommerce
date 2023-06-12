@@ -32,7 +32,7 @@ public class CategoryController {
         return new ResponseEntity<>(catDto, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/{categoryId}")
+    @PutMapping("/updates/{categoryId}")
     public ResponseEntity<CategoryDto> updateCategory(@Valid @PathVariable("categoryId")
                                               Integer categoryId,@RequestBody CategoryDto categoryDto) {
         logger.info("Request Created For Update User : {}"    +categoryId);
@@ -41,7 +41,7 @@ public class CategoryController {
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{categoryId}")
+    @DeleteMapping("/deletes/{categoryId}")
     public ResponseEntity<ApiResponse> deleteUser
             (@PathVariable Integer categoryId) {
         logger.warn("Request Created For Delete User : {}"  +categoryId);
@@ -65,7 +65,7 @@ public class CategoryController {
         return new ResponseEntity<PageableResponse<CategoryDto>>
                 (categoryService.getAllCategory(pageNumber,pageSize,sortBy,sortDir),HttpStatus.OK);
     }
-    @GetMapping("/getSingle/{categoryId}")
+    @GetMapping("/getSinglecat/{categoryId}")
     public ResponseEntity<CategoryDto> getSingle(@PathVariable Integer categoryId) {
         logger.info("Single Users Fetch Successfully : {}"   +categoryId);
         return new ResponseEntity<>(categoryService.getsingle(categoryId)

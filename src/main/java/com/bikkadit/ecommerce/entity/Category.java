@@ -1,9 +1,6 @@
 package com.bikkadit.ecommerce.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Setter
@@ -17,6 +14,7 @@ public class Category {
 
     @Id
     @Column(name="CAT_ID")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer categoryId;
 
     @Column(name="CAT_TITLE",length = 50,nullable = false)
