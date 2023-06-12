@@ -22,7 +22,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    private static Logger logger = LoggerFactory.getLogger(CategoryController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
 
     /*
@@ -34,6 +34,7 @@ public class CategoryController {
      *
      * @return
      */
+
     @PostMapping("/create")
     public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto){
         logger.info("Request Created For Create Category");
@@ -55,9 +56,9 @@ public class CategoryController {
     @PutMapping("/updates/{categoryId}")
     public ResponseEntity<CategoryDto> updateCategory(@Valid @PathVariable("categoryId")
                                               Integer categoryId,@RequestBody CategoryDto categoryDto) {
-        logger.info("Request Created For Update User : {}"    +categoryId);
+        logger.info("Request Created For Update User : {}"  ,  categoryId);
         CategoryDto update = categoryService.updateCategory(categoryDto,categoryId);
-        logger.info("Request Completed For Update User :{}"    +categoryId);
+        logger.info("Request Completed For Update User :{}" ,   categoryId);
         return new ResponseEntity<>(update, HttpStatus.OK);
     }
 
@@ -74,14 +75,14 @@ public class CategoryController {
     @DeleteMapping("/deletes/{categoryId}")
     public ResponseEntity<ApiResponse> deleteUser
             (@PathVariable Integer categoryId) {
-        logger.warn("Request Created For Delete User : {}"  +categoryId);
+        logger.warn("Request Created For Delete User : {}",  categoryId);
         categoryService.deleteCategory(categoryId);
         ApiResponse message = ApiResponse
                 .builder()
                 .message(AppConstant.CATEGORY_DELETE)
                 .success(true)
                 .status(HttpStatus.OK).build();
-        logger.warn("Request Completed For Update User : {}" +categoryId);
+        logger.warn("Request Completed For Update User : {}", categoryId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
     /*
@@ -117,7 +118,7 @@ public class CategoryController {
 
     @GetMapping("/getSinglecat/{categoryId}")
     public ResponseEntity<CategoryDto> getSingle(@PathVariable Integer categoryId) {
-        logger.info("Single Users Fetch Successfully : {}"   +categoryId);
+        logger.info("Single Users Fetch Successfully : {}"  , categoryId);
         return new ResponseEntity<>(categoryService.getsingle(categoryId)
                 , HttpStatus.OK);
     }

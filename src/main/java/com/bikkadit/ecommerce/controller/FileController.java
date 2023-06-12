@@ -32,7 +32,7 @@ public class FileController extends BaseEntityDto {
     @Autowired
     private UserService userService;
 
-    private static Logger logger = LoggerFactory.getLogger(FileController.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
     @Value("${user.profile.image.path}")
     private String imageUploadPath;

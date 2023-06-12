@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ModelMapper modelMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     // CREATE USER
 
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(UserDto userdto, String userId) {
-        logger.info("Request Created For Update User :{}" +userId);
+        logger.info("Request Created For Update User :{}" ,userId);
         User user = this.userRepository.findById(userId).orElseThrow(()
                 -> new ResourceNotFoundException(AppConstant.NOT_FOUND));
         user.setUserName(userdto.getUserName());
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
         user.setGender(userdto.getGender());
         User save = this.userRepository.save(user);
         UserDto user2 = this.UsertoDto(save);
-        logger.info("Request Completed For Update User : {}" +userId);
+        logger.info("Request Completed For Update User : {}", userId);
         return user2;
     }
 
@@ -71,10 +71,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String userId) {
-        logger.info("Request Created For Delete User : {}" +userId);
+        logger.info("Request Created For Delete User : {}", userId);
         User user = this.userRepository.findById(userId).orElseThrow(()
                 -> new ResourceNotFoundException(AppConstant.NOT_FOUND));
-        logger.info("Request Completed For Delete User : {}" +userId);
+        logger.info("Request Completed For Delete User : {}", userId);
         userRepository.delete(user);
     }
 
@@ -98,10 +98,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(String userId) {
-        logger.info("Request Created For Fetch Single User : {}" +userId);
+        logger.info("Request Created For Fetch Single User : {}" ,userId);
         User user = this.userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppConstant.USER_NOT_FOUND));
-        logger.info("Request Completed For Fetch Single User :{}" +userId);
+        logger.info("Request Completed For Fetch Single User :{}", userId);
         return this.UsertoDto(user);
     }
 
@@ -109,10 +109,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserByEmail(String userEmail) {
-        logger.info("Request Created For Fetch User By Email Id : {}" +userEmail);
+        logger.info("Request Created For Fetch User By Email Id : {}" ,userEmail);
       User user = this.userRepository.findByUserEmail(userEmail)
                 .orElseThrow(()-> new ResourceNotFoundException(AppConstant.EMAIL_ERROR));
-        logger.info("Request Completed For Fetch User By Email Id : {}" +userEmail);
+        logger.info("Request Completed For Fetch User By Email Id : {}" ,userEmail);
         return this.UsertoDto(user);
     }
 

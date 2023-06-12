@@ -1,5 +1,6 @@
 package com.bikkadit.ecommerce.entity;
 
+import com.bikkadit.ecommerce.payload.BaseEntityDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -17,7 +17,7 @@ import java.util.UUID;
 @Service
 public class FileServiceImpl implements FileService {
 
-    private static Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
     // Image Uploading
     @Override

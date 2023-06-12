@@ -31,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private ModelMapper modelMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
 
     //Create Category
     @Override
@@ -46,25 +46,25 @@ public class CategoryServiceImpl implements CategoryService {
     //Update category
     @Override
     public CategoryDto updateCategory(CategoryDto categoryDto, Integer categoryId) {
-        logger.info("Request Created For Update Category : {}" + categoryId);
+        logger.info("Request Created For Update Category : {}" , categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(() ->
                 new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND));
         category.setCategoryDescription(categoryDto.getCategoryDescription());
         category.setCategoryTitle(categoryDto.getCoverImage());
         category.setCoverImage(categoryDto.getCoverImage());
         Category update = categoryRepository.save(category);
-        logger.info("Request Completed For Update Category : {}" + categoryId);
+        logger.info("Request Completed For Update Category : {}" , categoryId);
         return modelMapper.map(update, CategoryDto.class);
     }
 
     //Delete Category
     @Override
     public void deleteCategory(Integer categoryId) {
-        logger.info("Request Created For Delete Category : {}" + categoryId);
+        logger.info("Request Created For Delete Category : {}" , categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(() ->
                 new ResourceNotFoundException(AppConstant.CATEGORY_DELETE));
         categoryRepository.delete(category);
-        logger.info("Request Completed For Delete Category : {}" + categoryId);
+        logger.info("Request Completed For Delete Category : {}" , categoryId);
     }
 
     //Get All Category
@@ -85,10 +85,10 @@ public class CategoryServiceImpl implements CategoryService {
     // Get Single Category By ID
     @Override
     public CategoryDto getsingle(Integer categoryId) {
-        logger.info("Request Created For Fetch Single Category : {}" +categoryId);
+        logger.info("Request Created For Fetch Single Category : {}" ,categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(() ->
                 new ResourceNotFoundException(AppConstant.FETCH_CATEGORY));
-        logger.info("Request Completed For Fetch Single Category : {}" +categoryId);
+        logger.info("Request Completed For Fetch Single Category : {}" ,categoryId);
         return modelMapper.map(category, CategoryDto.class);
     }
 }
