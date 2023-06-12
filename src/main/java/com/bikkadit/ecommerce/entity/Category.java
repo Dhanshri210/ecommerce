@@ -1,6 +1,7 @@
 package com.bikkadit.ecommerce.entity;
 
 import com.bikkadit.ecommerce.payload.BaseEntityDto;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name="Categories")
-public class Category {
+public class Category extends BaseEntityDto {
 
     @Id
     @Column(name="CAT_ID")
