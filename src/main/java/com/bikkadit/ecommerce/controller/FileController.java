@@ -90,8 +90,8 @@ public class FileController extends BaseEntityDto {
     }
 
     @PostMapping("/imagecover/{categoryId}")
-    public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("imageName")
-                                                         MultipartFile image, @PathVariable Integer categoryId) throws IOException {
+    public ResponseEntity<ImageResponse> uploadCatImage(@RequestParam("imageName")
+                                                         MultipartFile image, @PathVariable String categoryId) throws IOException {
         logger.info("Request Created For Uploading cover Image {} :",  categoryId);
         String images= fileService.uploadFile(image,imageUploadPath);
         CategoryDto cat=categoryService.getsingle(categoryId);
@@ -108,7 +108,7 @@ public class FileController extends BaseEntityDto {
     }
 
     @GetMapping("/imagescovers/{categoryId}")
-    public void serveUserImage(@PathVariable Integer categoryId, HttpServletResponse response) throws IOException {
+    public void serveCoverImage(@PathVariable String categoryId, HttpServletResponse response) throws IOException {
         CategoryDto cat= categoryService.getsingle(categoryId);
         logger.info("cover image name :{} ",cat.getCoverImage());
         InputStream resource= fileService.getResource(imageUploadPath,cat.getCoverImage());

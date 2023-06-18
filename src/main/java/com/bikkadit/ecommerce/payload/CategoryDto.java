@@ -12,6 +12,8 @@ import lombok.*;
 @Builder
 public class CategoryDto {
 
+    private String categoryId;
+
     @NotBlank
     @Size(min=5,max=15,message = "Title Name Start With Capital Letters")
     private String categoryTitle;

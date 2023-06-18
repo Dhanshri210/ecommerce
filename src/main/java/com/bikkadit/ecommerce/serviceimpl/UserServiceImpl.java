@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ModelMapper modelMapper;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     // CREATE USER
 

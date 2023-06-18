@@ -31,12 +31,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private ModelMapper modelMapper;
 
-    private static final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
 
     //Create Category
     @Override
     public CategoryDto createCategory(CategoryDto categoryDto) {
         logger.info("Request Create For Create Category");
+        String categoryId = UUID.randomUUID().toString();
+        categoryDto.setCategoryId(categoryId);
         Category category = this.modelMapper.map(categoryDto, Category.class);
         Category savecat = categoryRepository.save(category);
         logger.info("Request Completed For Create Category");
@@ -45,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     //Update category
     @Override
-    public CategoryDto updateCategory(CategoryDto categoryDto, Integer categoryId) {
+    public CategoryDto updateCategory(CategoryDto categoryDto, String categoryId) {
         logger.info("Request Created For Update Category : {}" , categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(() ->
                 new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND));
@@ -59,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     //Delete Category
     @Override
-    public void deleteCategory(Integer categoryId) {
+    public void deleteCategory(String categoryId) {
         logger.info("Request Created For Delete Category : {}" , categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(() ->
                 new ResourceNotFoundException(AppConstant.CATEGORY_DELETE));
@@ -84,7 +86,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     // Get Single Category By ID
     @Override
-    public CategoryDto getsingle(Integer categoryId) {
+    public CategoryDto getsingle(String categoryId) {
         logger.info("Request Created For Fetch Single Category : {}" ,categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(() ->
                 new ResourceNotFoundException(AppConstant.FETCH_CATEGORY));

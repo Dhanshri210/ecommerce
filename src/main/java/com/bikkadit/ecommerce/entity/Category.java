@@ -16,8 +16,8 @@ public class Category extends BaseEntityDto {
 
     @Id
     @Column(name="CAT_ID")
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer categoryId;
+   // @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private String categoryId;
 
     @Column(name="CAT_TITLE",length = 50,nullable = false)
     private String categoryTitle;

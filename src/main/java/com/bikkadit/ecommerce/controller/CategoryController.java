@@ -55,7 +55,7 @@ public class CategoryController {
 
     @PutMapping("/updates/{categoryId}")
     public ResponseEntity<CategoryDto> updateCategory(@Valid @PathVariable("categoryId")
-                                              Integer categoryId,@RequestBody CategoryDto categoryDto) {
+                                                          String categoryId,@RequestBody CategoryDto categoryDto) {
         logger.info("Request Created For Update User : {}"  ,  categoryId);
         CategoryDto update = categoryService.updateCategory(categoryDto,categoryId);
         logger.info("Request Completed For Update User :{}" ,   categoryId);
@@ -74,7 +74,7 @@ public class CategoryController {
 
     @DeleteMapping("/deletes/{categoryId}")
     public ResponseEntity<ApiResponse> deleteUser
-            (@PathVariable Integer categoryId) {
+            (@PathVariable String categoryId) {
         logger.warn("Request Created For Delete User : {}",  categoryId);
         categoryService.deleteCategory(categoryId);
         ApiResponse message = ApiResponse
@@ -117,7 +117,7 @@ public class CategoryController {
      */
 
     @GetMapping("/getSinglecat/{categoryId}")
-    public ResponseEntity<CategoryDto> getSingle(@PathVariable Integer categoryId) {
+    public ResponseEntity<CategoryDto> getSingle(@PathVariable String categoryId) {
         logger.info("Single Users Fetch Successfully : {}"  , categoryId);
         return new ResponseEntity<>(categoryService.getsingle(categoryId)
                 , HttpStatus.OK);
