@@ -16,5 +16,14 @@ public class AppConstant {
     public static final String CATEGORY_DELETE = "Category Delete Successfully ";
 
     public static final String FETCH_CATEGORY = "Single Category fetch Successfully ";
+
+    public static final String NOT_FOUNDs = "Product Not Found of given ID ";
+
+    public static final String DELETE_PRODUCT = "Product Delete successfully By given Id";
+
+    public static final String SINGLE_PRODUCT = " Single Product get successfully By given Id";
+
+
+
 }
 
