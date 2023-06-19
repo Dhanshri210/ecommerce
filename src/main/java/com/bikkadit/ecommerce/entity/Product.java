@@ -1,9 +1,6 @@
 package com.bikkadit.ecommerce.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -36,7 +33,7 @@ public class Product {
     private Integer quantity;
 
     @Column(name= "SIZE")
-    private Integer size;
+    private String size;
 
     @Column(name="LIVE")
     private boolean live;

@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -37,6 +38,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto create(ProductDto productDto) {
         logger.info("Request Created For Create products");
+        String productId = UUID.randomUUID().toString();
+        productDto.setProductId(productId);
        Product product= modelMapper.map(productDto, Product.class);
        Product saveProduct=productRepository.save(product);
         logger.info("Request Completed For Create products");

@@ -6,7 +6,6 @@ import com.bikkadit.ecommerce.payload.CategoryDto;
 import com.bikkadit.ecommerce.payload.PageableResponse;
 import com.bikkadit.ecommerce.payload.ProductDto;
 import com.bikkadit.ecommerce.service.ProductService;
-import com.bikkadit.ecommerce.serviceimpl.ProductServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

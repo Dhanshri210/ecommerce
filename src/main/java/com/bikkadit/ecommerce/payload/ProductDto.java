@@ -11,8 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
-
 public class ProductDto {
 
 
@@ -36,7 +34,7 @@ public class ProductDto {
     private Integer quantity;
 
     @NotBlank
-    private Integer size;
+    private String size;
 
     @NotBlank
     private boolean live;
