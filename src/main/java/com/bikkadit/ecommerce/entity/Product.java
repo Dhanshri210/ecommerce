@@ -41,4 +41,10 @@ public class Product {
     @Column(name="STOCK")
     private boolean stock;
 
+    @Column(name="PRODUCT_IMAGE")
+    private String productImage;
+
+    @Column(name="PRODUCT_COLOUR")
+    private String productColour;
+
 }

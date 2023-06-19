@@ -1,5 +1,6 @@
 package com.bikkadit.ecommerce.payload;
 
+import com.bikkadit.ecommerce.utils.ImageNameValid;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
@@ -27,13 +28,13 @@ public class ProductDto {
     @NotBlank
     private Integer price;
 
-    @NotBlank
+    @NotBlank(message = "Product Is Already in Discounted")
     private Integer discountPrice;
 
     @NotBlank
     private Integer quantity;
 
-    @NotBlank
+    @NotBlank(message = "All Size Available")
     private String size;
 
     @NotBlank
@@ -41,6 +42,12 @@ public class ProductDto {
 
     @NotBlank
     private boolean stock;
+
+    @ImageNameValid
+    private String productImage;
+
+    @NotBlank
+    private String productColour;
 
 }
 

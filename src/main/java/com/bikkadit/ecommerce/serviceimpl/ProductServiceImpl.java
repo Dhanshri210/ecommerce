@@ -59,6 +59,8 @@ public class ProductServiceImpl implements ProductService {
         product.setDiscountPrice(product.getDiscountPrice());
         product.setLive(productDto.isLive());
         product.setStock(productDto.isStock());
+        product.setProductColour(productDto.getProductColour());
+        product.setProductImage(productDto.getProductImage());
         Product update=productRepository.save(product);
         logger.info("Request Completed For Update products Details :{}",productId);
       return modelMapper.map(update,ProductDto.class);
