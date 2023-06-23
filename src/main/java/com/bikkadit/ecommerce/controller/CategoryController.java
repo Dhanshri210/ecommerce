@@ -140,6 +140,16 @@ public class CategoryController {
                 , HttpStatus.OK);
     }
 
+    /*
+     * @author Dhanshri
+     *
+     * @apiNote This Api is used For category image Upload
+     *
+     * @param categoryId
+     *
+     * @return
+     */
+
     @PostMapping("/imagecover/{categoryId}")
     public ResponseEntity<ImageResponse> uploadCatImage(@RequestParam("imageName")
                                                         MultipartFile image, @PathVariable String categoryId) throws IOException {
@@ -157,6 +167,16 @@ public class CategoryController {
         logger.info("Request Completed For Uploading cover Image {}",  categoryId);
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
+
+    /*
+     * @author Dhanshri
+     *
+     * @apiNote This Api is used For serve category image
+     *
+     * @param categoryId
+     *
+     * @return
+     */
 
     @GetMapping("/imagescovers/{categoryId}")
     public void serveCoverImage(@PathVariable String categoryId, HttpServletResponse response) throws IOException {

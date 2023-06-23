@@ -80,18 +80,14 @@ public class ProductServiceImpl implements ProductService {
         String fullpath = imageUploadPath2 +product.getProductImage();
         try {
             Path path = Paths.get(fullpath);
-            try {
                 Files.delete(path);
                 logger.info("Image Product Deleted :{}", productId);
             } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            logger.info("Exception with Image Product Delete:{}",productId);
+        }
             productRepository.delete(product);
-            Paths.get(fullpath);
-        } catch (Exception e) {
             logger.info("Request Completed For Delete products Details :{}", productId);
         }
-    }
     // Get Single Product
     @Override
     public ProductDto getSingleProduct(String productId) {

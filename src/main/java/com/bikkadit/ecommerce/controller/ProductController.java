@@ -171,6 +171,16 @@ public class ProductController {
         logger.info("Products Are get Successfully by using query : {}",query);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    /*
+     * @author Dhanshri
+     *
+     * @apiNote This Api is used For Product Image Upload
+     *
+     * @param productId
+     *
+     * @return
+     */
+
     @PostMapping("/productImage/{productId}")
     public ResponseEntity<ImageResponse> uploadProductImage(@RequestParam("imageName")
                                                             MultipartFile image, @PathVariable String productId) throws IOException {
@@ -188,6 +198,16 @@ public class ProductController {
         logger.info("Request Completed For Uploading Product Image {}",  productId);
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
+
+    /*
+     * @author Dhanshri
+     *
+     * @apiNote This Api is used For Serve product image
+     *
+     * @param productId
+     *
+     * @return
+     */
 
     @GetMapping("/productImages/{productId}")
     public void serveProductImage(@PathVariable String productId, HttpServletResponse response) throws IOException {

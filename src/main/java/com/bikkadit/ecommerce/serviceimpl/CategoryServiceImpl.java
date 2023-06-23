@@ -20,7 +20,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
@@ -69,7 +72,15 @@ public class CategoryServiceImpl implements CategoryService {
         logger.info("Request Created For Delete Category : {}" , categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(() ->
                 new ResourceNotFoundException(AppConstant.CATEGORY_DELETE));
-        categoryRepository.delete(category);
+        String fullpath = imageUploadPath1 +category.getCoverImage();
+        try {
+            Path path = Paths.get(fullpath);
+                Files.delete(path);
+                logger.info("Image User Deleted :{}", categoryId);
+            } catch (IOException e) {
+            logger.info("Request Completed For Delete cover imgae : {}", categoryId);
+            }
+            categoryRepository.delete(category);
         logger.info("Request Completed For Delete Category : {}" , categoryId);
     }
 
