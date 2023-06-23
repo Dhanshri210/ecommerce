@@ -2,18 +2,29 @@ package com.bikkadit.ecommerce.controller;
 
 import com.bikkadit.ecommerce.constant.AppConstant;
 import com.bikkadit.ecommerce.helper.ApiResponse;
+import com.bikkadit.ecommerce.helper.ImageResponse;
 import com.bikkadit.ecommerce.payload.CategoryDto;
 import com.bikkadit.ecommerce.payload.PageableResponse;
 import com.bikkadit.ecommerce.payload.UserDto;
 import com.bikkadit.ecommerce.service.CategoryService;
+import com.bikkadit.ecommerce.service.FileService;
 import com.bikkadit.ecommerce.serviceimpl.CategoryServiceImpl;
+import com.bikkadit.ecommerce.serviceimpl.FileServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 @RestController
 @RequestMapping("/api/")
@@ -21,6 +32,12 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private FileServiceImpl fileService;
+
+    @Value("${category.profile.image.path}")
+    private String imageUploadPath1;
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
@@ -122,5 +139,34 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.getsingle(categoryId)
                 , HttpStatus.OK);
     }
+
+    @PostMapping("/imagecover/{categoryId}")
+    public ResponseEntity<ImageResponse> uploadCatImage(@RequestParam("imageName")
+                                                        MultipartFile image, @PathVariable String categoryId) throws IOException {
+        logger.info("Request Created For Uploading cover Image {} :",  categoryId);
+        String images= fileService.uploadFile(image,imageUploadPath1);
+        CategoryDto cat=categoryService.getsingle(categoryId);
+        cat.setCoverImage(images);
+        CategoryDto categoryDto =categoryService.updateCategory(cat,categoryId);
+        ImageResponse response = ImageResponse
+                .builder()
+                .imageName(images)
+                .success(true)
+                .status(HttpStatus.CREATED)
+                .build();
+        logger.info("Request Completed For Uploading cover Image {}",  categoryId);
+        return new ResponseEntity<>(response,HttpStatus.CREATED);
+    }
+
+    @GetMapping("/imagescovers/{categoryId}")
+    public void serveCoverImage(@PathVariable String categoryId, HttpServletResponse response) throws IOException {
+        CategoryDto cat= categoryService.getsingle(categoryId);
+        logger.info("cover image name :{} ",cat.getCoverImage());
+        InputStream resource= fileService.getResource(imageUploadPath1,cat.getCoverImage());
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource,response.getOutputStream());
+        logger.info("Image Getting Successfully");
+    }
+
 
 }

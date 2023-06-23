@@ -3,6 +3,7 @@ package com.bikkadit.ecommerce.service;
 import com.bikkadit.ecommerce.payload.PageableResponse;
 import com.bikkadit.ecommerce.payload.ProductDto;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ProductService {
@@ -14,7 +15,7 @@ public interface ProductService {
    ProductDto updateProduct(ProductDto productDto , String productId);
 
    //Delete
-   void deleteProduct(String productId);
+   void deleteProduct(String productId) throws IOException;
 
   // Get Single
    ProductDto getSingleProduct(String productId);

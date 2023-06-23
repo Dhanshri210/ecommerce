@@ -2,16 +2,26 @@ package com.bikkadit.ecommerce.controller;
 
 import com.bikkadit.ecommerce.constant.AppConstant;
 import com.bikkadit.ecommerce.helper.ApiResponse;
+import com.bikkadit.ecommerce.helper.ImageResponse;
 import com.bikkadit.ecommerce.payload.CategoryDto;
 import com.bikkadit.ecommerce.payload.PageableResponse;
 import com.bikkadit.ecommerce.payload.ProductDto;
+import com.bikkadit.ecommerce.service.FileService;
 import com.bikkadit.ecommerce.service.ProductService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 @RestController
 @RequestMapping("/api/product")
@@ -19,6 +29,12 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private FileService fileService;
+
+    @Value("${product.profile.image.path}")
+    private String imageUploadPath2;
 
     @Autowired
     private static Logger logger = LoggerFactory.getLogger(ProductController.class);
@@ -71,7 +87,7 @@ public class ProductController {
      */
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<ApiResponse> delete(@PathVariable String productId){
+    public ResponseEntity<ApiResponse> delete(@PathVariable String productId) throws IOException {
         logger.info("Request Created For Delete Products Details :{}",productId);
        productService.deleteProduct(productId);
       ApiResponse response= ApiResponse.builder().message(AppConstant.DELETE_PRODUCT).status(HttpStatus.OK).success(true).build();
@@ -155,5 +171,33 @@ public class ProductController {
         logger.info("Products Are get Successfully by using query : {}",query);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @PostMapping("/productImage/{productId}")
+    public ResponseEntity<ImageResponse> uploadProductImage(@RequestParam("imageName")
+                                                            MultipartFile image, @PathVariable String productId) throws IOException {
+        logger.info("Request Created For Uploading Product Image {} :",  productId);
+        String products= fileService.uploadFile(image,imageUploadPath2);
+        ProductDto product=productService.getSingleProduct(productId);
+        product.setProductImage(products);
+        ProductDto productDto =productService.updateProduct(product,productId);
+        ImageResponse response = ImageResponse
+                .builder()
+                .imageName(products)
+                .success(true)
+                .status(HttpStatus.CREATED)
+                .build();
+        logger.info("Request Completed For Uploading Product Image {}",  productId);
+        return new ResponseEntity<>(response,HttpStatus.CREATED);
+    }
 
+    @GetMapping("/productImages/{productId}")
+    public void serveProductImage(@PathVariable String productId, HttpServletResponse response) throws IOException {
+        ProductDto product= productService.getSingleProduct(productId);
+        logger.info("Product image name :{} ",product.getProductImage());
+        InputStream resource= fileService.getResource(imageUploadPath2,product.getProductImage());
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource,response.getOutputStream());
+        logger.info(" product Image Getting Successfully");
+    }
 }
+
+

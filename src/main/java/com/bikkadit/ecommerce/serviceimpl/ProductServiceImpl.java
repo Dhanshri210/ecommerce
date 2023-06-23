@@ -14,13 +14,16 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
@@ -31,6 +34,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Value("${product.profile.image.path}")
+    private String imageUploadPath2;
 
     private static  Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
@@ -69,12 +75,23 @@ public class ProductServiceImpl implements ProductService {
     //Delete Product
     @Override
     public void deleteProduct(String productId) {
-        logger.info("Request Created For Delete products Details :{}",productId);
-        Product product=productRepository.findById(productId).orElseThrow(()-> new ResourceNotFoundException(AppConstant.DELETE_PRODUCT));
-        productRepository.delete(product);
-        logger.info("Request Completed For Delete products Details :{}",productId);
+        logger.info("Request Created For Delete products Details :{}", productId);
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.DELETE_PRODUCT));
+        String fullpath = imageUploadPath2 +product.getProductImage();
+        try {
+            Path path = Paths.get(fullpath);
+            try {
+                Files.delete(path);
+                logger.info("Image Product Deleted :{}", productId);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            productRepository.delete(product);
+            Paths.get(fullpath);
+        } catch (Exception e) {
+            logger.info("Request Completed For Delete products Details :{}", productId);
+        }
     }
-
     // Get Single Product
     @Override
     public ProductDto getSingleProduct(String productId) {

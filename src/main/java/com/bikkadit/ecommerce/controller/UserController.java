@@ -2,17 +2,27 @@ package com.bikkadit.ecommerce.controller;
 import com.bikkadit.ecommerce.constant.AppConstant;
 import com.bikkadit.ecommerce.entity.BaseEntity;
 import com.bikkadit.ecommerce.helper.ApiResponse;
+import com.bikkadit.ecommerce.helper.ImageResponse;
 import com.bikkadit.ecommerce.payload.BaseEntityDto;
 import com.bikkadit.ecommerce.payload.PageableResponse;
 import com.bikkadit.ecommerce.service.UserService;
 import com.bikkadit.ecommerce.payload.UserDto;
+import com.bikkadit.ecommerce.serviceimpl.FileServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -23,6 +33,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private FileServiceImpl fileService;
+
+    @Value("${user.profile.image.path}")
+    private String imageUploadPath;
+
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     /*
@@ -31,6 +47,7 @@ public class UserController {
      * @apiNote This Api is used For Create User
      *
      * @param userDto
+     *
      *
      * @return
      */
@@ -157,6 +174,53 @@ public class UserController {
     public ResponseEntity<Stream<UserDto>> searchUser(@PathVariable String keyword) {
         logger.info("Search User By Using Keywords {}"  ,  keyword);
         return new ResponseEntity<>(userService.searchUser(keyword), HttpStatus.OK);
+    }
+
+    /*
+     * @author Dhanshri
+     *
+     * @apiNote This Api is used For Uploading Image
+     *
+     * @param userId
+     *
+     * @return
+     */
+
+    @PostMapping("/image/{userId}")
+    public ResponseEntity<ImageResponse> uploadUserImage(@RequestParam("imageName")
+                                                         MultipartFile image, @PathVariable String userId) throws IOException {
+        logger.info("Request Created For Uploading user Image {}  ", userId);
+        String images= fileService.uploadFile(image,imageUploadPath);
+        UserDto user=userService.getUser(userId);
+        user.setImageName(images);
+        UserDto userdto =userService.updateUser(user,userId);
+        ImageResponse response = ImageResponse
+                .builder()
+                .imageName(images)
+                .success(true)
+                .status(HttpStatus.CREATED)
+                .build();
+        logger.info("Request Completed For Uploading user Image {} ", userId);
+        return new ResponseEntity<>(response,HttpStatus.CREATED);
+    }
+    /*
+     * @author Dhanshri
+     *
+     * @apiNote This Api is used For Serve Image
+     *
+     * @param userId
+     *
+     * @return
+     */
+
+    @GetMapping("/images/{userId}")
+    public void serveUserImage(@PathVariable String userId, HttpServletResponse response) throws IOException {
+        UserDto users= userService.getUser(userId);
+        logger.info("user image name :{} ",users.getImageName());
+        InputStream resource= fileService.getResource(imageUploadPath,users.getImageName());
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        StreamUtils.copy(resource,response.getOutputStream());
+        logger.info("Image Getting Successfully");
     }
 
 }
